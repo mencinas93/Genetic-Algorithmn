@@ -2,6 +2,8 @@ import random
 import math
 import tkinter as tk
 import matplotlib.pyplot as plt
+import time
+
 
 max_generations = 100
 pop_size = 100
@@ -307,7 +309,7 @@ for crossover_method in crossover_methods:
             mutation_rate = 0.2
 
         results = []
-
+        start_time = time.time() 
         # Run the GA loop
         for _ in range(100):  # number of run times
             population = initialize_population(pop_size, city_ids)
@@ -367,7 +369,9 @@ for crossover_method in crossover_methods:
         else:
             print("No valid solutions found!")
 
-
+        end_time = time.time()  # Records the end time
+        execution_time = end_time - start_time
+        print(f"Execution time for 100 runs: {execution_time:.2f} seconds")
 
 for combo, fitness_values in fitness_dict.items():
     crossover_method, mutation_method = combo
@@ -377,7 +381,6 @@ for combo, fitness_values in fitness_dict.items():
         label = f"{crossover_method}, {mutation_method}"
         
         if fitness_values:
-            # Plot the improvement curve
             plt.plot(generations, fitness_values, label=label)
 
 plt.xlabel("Generation")
@@ -385,20 +388,5 @@ plt.ylabel("Cost")
 plt.legend(loc="best")
 plt.title("Improvement Curves for two selected GA combinations")
 plt.show()
-
-#graph to show cost over generation with each unique combination
-#for combo, fitness_values in fitness_dict.items():
- #   crossover_method, mutation_method = combo
- #   generations = list(range(len(fitness_values)))
-    
- #   label = f"{crossover_method}, {mutation_method}"
-    
-  #  if fitness_values:
-        # Plotting the improvement curve
-      #  plt.plot(generations, fitness_values, label=label)
-
-#plt.xlabel("Generation")
-#plt.ylabel("Cost")
-#plt.legend(loc="best")
-#plt.title("Improvement Curves for Different GA Combinations")
+Curves for Different GA Combinations")
 #plt.show()
