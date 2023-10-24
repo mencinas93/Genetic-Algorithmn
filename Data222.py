@@ -12,11 +12,13 @@ mutation_rate = 0.2
 
 class Individual:
     def __init__(self, city_ids):
-        #initialize an individual with random route that includes all city ids. 
+        #initialize an individual with list all city ids. 
         #making sure route starts and ends at same city id
-        self.route = random.sample(city_ids, len(city_ids))
-        self.route.append(self.route[0])
+        self.route = list(city_ids)
+        #self.route.append(self.route[0])
         self.fitness = None
+        self.route[0] = 1
+        self.route[-1] = 1
 
     def swap_mutation(self):
         # Selects two random cities in the route and swaps their positions.
@@ -126,9 +128,11 @@ def roulette_wheel_selection(population):
     random_selection= random.uniform(0, total_fitness)
     accumaleted_fitness = 0
     for ind in population.individuals:
-        accumaleted_fitness += 1 / ind.fitness
-        if accumaleted_fitness>= random_selection:
-            return ind
+        if ind.fitness is not None:
+            accumaleted_fitness += 1 / ind.fitness
+            if accumaleted_fitness>= random_selection:
+                return ind
+    return None
 
 
 def check_termination_criteria(population, generation, max_generations, fitness_threshold):
@@ -388,5 +392,5 @@ plt.ylabel("Cost")
 plt.legend(loc="best")
 plt.title("Improvement Curves for two selected GA combinations")
 plt.show()
-Curves for Different GA Combinations")
+ Combinations")
 #plt.show()
